@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CineTrack</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>🎬 CineTrack</h1>
+
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Search movies..." 
+    />
+
+    <button id="searchBtn">Search</button>
+
+
+    <div id="loading" class="hidden">Loading...</div>
+  </header>
+
+  <main class="layout">
+
+    <section id="movieContainer">
+    </section>
+
+
+    <aside id="watchlistSection">
+
+      <h2>⭐ Watchlist</h2>
+
+      <div id="watchlistContainer">
+      </div>
+
+      <button id="randomBtn">🎲 Random Movie</button>
+
+    </aside>
+
+  </main>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
