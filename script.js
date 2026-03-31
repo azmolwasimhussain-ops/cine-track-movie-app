@@ -1,134 +1,175 @@
 const API_KEY = "f286f7c8";
 
-const searchInput = document.getElementById("searchInput");
+const inputBox = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
-const movieContainer = document.getElementById("movieContainer");
-const loading = document.getElementById("loading");
+const movieBox = document.getElementById("movieContainer");
+const loadingText = document.getElementById("loading");
+const watchBox = document.getElementById("watchlistContainer");
+const randomBtn = document.getElementById("randomBtn");
 
-
-const watchlistContainer = document.getElementById("watchlistContainer");
-
-
-let currentMovies = [];
-
-
+let moviesData = [];
 let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-async function fetchMovies(query) {
+
+async function getMovies(name) {
+  loadingText.classList.remove("hidden");
+
   try {
-
-    loading.classList.remove("hidden");
-    const res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${API_KEY}`);
+    const res = await fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${name}`);
     const data = await res.json();
-    loading.classList.add("hidden");
 
-    displayMovies(data.Search);
+    loadingText.classList.add("hidden");
 
-  } catch (error) {
-    console.log("Error:", error);
-    loading.classList.add("hidden");
+    if (data.Response === "False") {
+      movieBox.innerHTML = "<p>No movies found</p>";
+      return;
+    }
+
+    moviesData = data.Search;
+    showMovies(moviesData);
+
+  } catch (err) {
+    console.log(err);
+    loadingText.classList.add("hidden");
   }
 }
 
-function displayMovies(movies) {
-  movieContainer.innerHTML = "";
+function showMovies(list) {
+  movieBox.innerHTML = "";
 
-  currentMovies = movies;
+  list.forEach(function (movie) {
 
-  if (!movies) {
-    movieContainer.innerHTML = "<p>No movies found</p>";
-    return;
-  }
+    let div = document.createElement("div");
+    div.className = "movie-card";
 
-  movies.forEach(movie => {
+    let btnText = "Add";
 
-    const card = document.createElement("div");
-    card.className = "movie-card";
+    for (let i = 0; i < watchlist.length; i++) {
+      if (watchlist[i].imdbID === movie.imdbID) {
+        btnText = "Remove";
+      }
+    }
 
-    card.innerHTML = `
-
-      <img src="${movie.Poster !== "N/A" ? movie.Poster : "https://via.placeholder.com/200"}">
+    div.innerHTML = `
+      <img src="${movie.Poster !== "N/A" ? movie.Poster : ""}">
       <h3>${movie.Title}</h3>
       <p>${movie.Year}</p>
-      <button onclick="toggleWatchlist('${movie.imdbID}')">
-        ${isInWatchlist(movie.imdbID) ? "Remove" : "Add"}
-      </button>
+      <button data-id="${movie.imdbID}">${btnText}</button>
     `;
 
-    movieContainer.appendChild(card);
+    div.querySelector("button").addEventListener("click", function () {
+      handleWatchlist(movie.imdbID);
+    });
+
+    movieBox.appendChild(div);
   });
 }
 
+function handleWatchlist(id) {
 
-function isInWatchlist(id) {
-  return watchlist.find(movie => movie.imdbID === id);
-}
+  let found = false;
 
+  for (let i = 0; i < watchlist.length; i++) {
+    if (watchlist[i].imdbID === id) {
+      watchlist.splice(i, 1);
+      found = true;
+      break;
+    }
+  }
 
-function toggleWatchlist(id) {
-  const exists = watchlist.find(movie => movie.imdbID === id);
-
-  if (exists) {
-    watchlist = watchlist.filter(movie => movie.imdbID !== id);
-  } else {
-    const movie = currentMovies.find(movie => movie.imdbID === id);
-    watchlist.push(movie);
+  if (!found) {
+    for (let i = 0; i < moviesData.length; i++) {
+      if (moviesData[i].imdbID === id) {
+        watchlist.push(moviesData[i]);
+      }
+    }
   }
 
   localStorage.setItem("watchlist", JSON.stringify(watchlist));
 
   renderWatchlist();
-  displayMovies(currentMovies);
+  showMovies(moviesData);
 }
 
+
 function renderWatchlist() {
+  watchBox.innerHTML = "";
+
   if (watchlist.length === 0) {
-    watchlistContainer.innerHTML = "<p>No saved movies</p>";
+    watchBox.innerHTML = "<p>No saved movies</p>";
     return;
   }
 
-  watchlistContainer.innerHTML = watchlist.map(movie => `
-    <div class="saved-item">
+  watchlist.forEach(function (movie) {
+    let div = document.createElement("div");
+    div.className = "saved-item";
+
+    div.innerHTML = `
       <p>${movie.Title}</p>
-      <button onclick="toggleWatchlist('${movie.imdbID}')">Remove</button>
-    </div>
-  `).join("");
+      <button data-id="${movie.imdbID}">Remove</button>
+    `;
+
+    div.querySelector("button").addEventListener("click", function () {
+      handleWatchlist(movie.imdbID);
+    });
+
+    watchBox.appendChild(div);
+  });
 }
 
-function filterMovies(type) {
-
-  const filtered = currentMovies.filter(movie => movie.Type === type);
-
-  displayMovies(filtered);
-}
-
-function sortMovies() {
-  const sorted = [...currentMovies].sort((a, b) => a.Year - b.Year);
-
-  displayMovies(sorted);
-}
-function debounce(fn, delay) {
-  let timeout;
-
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => fn(...args), delay);
-  };
-}
-
-const debouncedSearch = debounce(fetchMovies, 500);
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.trim();
-
-  if (query.length > 2) {
-    debouncedSearch(query);
+searchBtn.addEventListener("click", function () {
+  let value = inputBox.value.trim();
+  if (value !== "") {
+    getMovies(value);
   }
 });
 
-searchBtn.addEventListener("click", () => {
-  const query = searchInput.value.trim();
-  fetchMovies(query);
+
+let timer;
+
+inputBox.addEventListener("input", function () {
+  let value = inputBox.value.trim();
+
+  clearTimeout(timer);
+
+  timer = setTimeout(function () {
+    if (value.length > 2) {
+      getMovies(value);
+    }
+  }, 400);
 });
+
+
+function filterMovies(type) {
+  let arr = moviesData.filter(function (m) {
+    return m.Type === type;
+  });
+
+  showMovies(arr);
+}
+
+
+function sortMovies() {
+  let arr = [...moviesData];
+
+  arr.sort(function (a, b) {
+    return a.Year - b.Year;
+  });
+
+  showMovies(arr);
+}
+
+randomBtn.addEventListener("click", function () {
+  if (watchlist.length === 0) {
+    alert("No movies in watchlist");
+    return;
+  }
+
+  let index = Math.floor(Math.random() * watchlist.length);
+  let movie = watchlist[index];
+
+  alert("Tonight watch: " + movie.Title);
+});
+
 
 renderWatchlist();

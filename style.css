@@ -27,7 +27,7 @@ button {
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  background: #2563eb; /* blue glow */
+  background: #2563eb; 
   color: white;
   cursor: pointer;
   transition: 0.3s;
@@ -52,7 +52,7 @@ button:hover {
 }
 
 .movie-card {
-  background: rgba(255, 255, 255, 0.05); /* glass effect */
+  background: rgba(255, 255, 255, 0.05); 
   backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 10px;
