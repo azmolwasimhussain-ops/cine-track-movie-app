@@ -2,6 +2,7 @@ import { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import MovieGrid from "./components/MovieGrid";
 import Watchlist from "./components/Watchlist";
+import { Film } from "lucide-react";
 import "./App.css";
 
 const API_KEY = "f286f7c8";
@@ -15,7 +16,6 @@ function App() {
 
   const searchMovies = async (query) => {
     if (!query.trim()) return;
-
     setLoading(true);
     setError("");
     setSearched(true);
@@ -42,21 +42,20 @@ function App() {
   const toggleWatchlist = (movie) => {
     setWatchlist((prev) => {
       const exists = prev.find((m) => m.imdbID === movie.imdbID);
-      if (exists) {
-        return prev.filter((m) => m.imdbID !== movie.imdbID);
-      } else {
-        return [...prev, movie];
-      }
+      if (exists) return prev.filter((m) => m.imdbID !== movie.imdbID);
+      return [...prev, movie];
     });
   };
 
-  const isInWatchlist = (imdbID) =>
-    watchlist.some((m) => m.imdbID === imdbID);
+  const isInWatchlist = (imdbID) => watchlist.some((m) => m.imdbID === imdbID);
 
   return (
     <div className="app">
       <header className="header">
-        <h1>🎬 CineTrack</h1>
+        <div className="header-icon">
+          <Film size={40} color="#e94560" />
+        </div>
+        <h1>CineTrack</h1>
         <p>Search movies and build your personal watchlist</p>
       </header>
 
@@ -70,11 +69,11 @@ function App() {
           </div>
         )}
 
-        {error && <div className="error-msg">❌ {error}</div>}
+        {error && <div className="error-msg">{error}</div>}
 
         {!loading && searched && movies.length === 0 && !error && (
           <div className="empty-state">
-            🎭 No movies found. Try a different search!
+            No movies found. Try a different search!
           </div>
         )}
 
@@ -86,10 +85,7 @@ function App() {
           />
         )}
 
-        <Watchlist
-          watchlist={watchlist}
-          onToggleWatchlist={toggleWatchlist}
-        />
+        <Watchlist watchlist={watchlist} onToggleWatchlist={toggleWatchlist} />
       </main>
     </div>
   );

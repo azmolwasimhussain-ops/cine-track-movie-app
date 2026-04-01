@@ -1,5 +1,6 @@
-const PLACEHOLDER =
-  "https://placehold.co/300x445/1a1a2e/white?text=No+Poster";
+import { Plus, Check, Calendar } from "lucide-react";
+
+const PLACEHOLDER = "https://placehold.co/300x445/1a1a2e/white?text=No+Poster";
 
 function MovieCard({ movie, onToggleWatchlist, isInWatchlist }) {
   const inList = isInWatchlist(movie.imdbID);
@@ -17,14 +18,25 @@ function MovieCard({ movie, onToggleWatchlist, isInWatchlist }) {
 
       <div className="movie-info">
         <h3 className="movie-title">{movie.Title}</h3>
-        <p className="movie-year">📅 {movie.Year}</p>
+        <p className="movie-year">
+          <Calendar size={13} />
+          {movie.Year}
+        </p>
       </div>
 
       <button
         className={`watchlist-btn ${inList ? "remove" : "add"}`}
         onClick={() => onToggleWatchlist(movie)}
       >
-        {inList ? "✅ Remove" : "➕ Add to Watchlist"}
+        {inList ? (
+          <>
+            <Check size={15} /> Remove
+          </>
+        ) : (
+          <>
+            <Plus size={15} /> Add to Watchlist
+          </>
+        )}
       </button>
     </div>
   );

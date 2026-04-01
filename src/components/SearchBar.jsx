@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Search } from "lucide-react";
 
 function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
@@ -18,7 +19,8 @@ function SearchBar({ onSearch }) {
         className="search-input"
       />
       <button type="submit" className="search-btn">
-        🔍 Search
+        <Search size={18} />
+        Search
       </button>
     </form>
   );

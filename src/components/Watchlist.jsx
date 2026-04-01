@@ -1,13 +1,18 @@
+import { Bookmark, List } from "lucide-react";
 import MovieCard from "./MovieCard";
 
 function Watchlist({ watchlist, onToggleWatchlist }) {
   return (
     <section className="watchlist-section">
-      <h2>🎯 My Watchlist <span className="count">({watchlist.length})</span></h2>
+      <h2>
+        <List size={20} />
+        My Watchlist <span className="count">({watchlist.length})</span>
+      </h2>
 
       {watchlist.length === 0 ? (
         <div className="empty-watchlist">
-          <p>🍿 Your watchlist is empty. Start adding movies!</p>
+          <Bookmark size={48} color="#2a2a4a" />
+          <p>Your watchlist is empty. Start adding movies!</p>
         </div>
       ) : (
         <div className="movie-grid">

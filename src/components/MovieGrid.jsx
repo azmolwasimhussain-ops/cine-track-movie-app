@@ -1,9 +1,13 @@
+import { Search } from "lucide-react";
 import MovieCard from "./MovieCard";
 
 function MovieGrid({ movies, onToggleWatchlist, isInWatchlist }) {
   return (
     <section className="movie-section">
-      <h2>🔎 Search Results <span className="count">({movies.length})</span></h2>
+      <h2>
+        <Search size={20} />
+        Search Results <span className="count">({movies.length})</span>
+      </h2>
       <div className="movie-grid">
         {movies.map((movie) => (
           <MovieCard
