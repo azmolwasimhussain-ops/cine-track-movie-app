@@ -1,0 +1,282 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #0f0f1a;
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  padding: 50px 20px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 20px;
+  margin-bottom: 35px;
+  border: 1px solid #2a2a4a;
+}
+
+.header h1 {
+  font-size: 3rem;
+  color: #e94560;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.header p {
+  color: #8888aa;
+  font-size: 1.1rem;
+}
+
+/* ── Search Bar ── */
+.search-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 15px 22px;
+  border-radius: 12px;
+  border: 2px solid #2a2a4a;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input::placeholder {
+  color: #555577;
+}
+
+.search-input:focus {
+  border-color: #e94560;
+}
+
+.search-btn {
+  padding: 15px 28px;
+  background: #e94560;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.search-btn:hover {
+  background: #c73652;
+  transform: scale(1.03);
+}
+
+/* ── Loading ── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px;
+  color: #8888aa;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #2a2a4a;
+  border-top-color: #e94560;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Error / Empty ── */
+.error-msg {
+  text-align: center;
+  padding: 30px;
+  color: #e94560;
+  font-size: 1.1rem;
+  background: #1a1a2e;
+  border-radius: 12px;
+  border: 1px solid #e9456033;
+  margin-bottom: 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #555577;
+  font-size: 1.1rem;
+}
+
+/* ── Section Headings ── */
+.movie-section,
+.watchlist-section {
+  margin-bottom: 50px;
+}
+
+.movie-section h2,
+.watchlist-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 22px;
+  color: #ffffff;
+  border-left: 4px solid #e94560;
+  padding-left: 14px;
+}
+
+.count {
+  color: #e94560;
+  font-size: 1rem;
+}
+
+/* ── Movie Grid ── */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 22px;
+}
+
+/* ── Movie Card ── */
+.movie-card {
+  background: #1a1a2e;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2a2a4a;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.movie-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(233, 69, 96, 0.25);
+}
+
+.poster-wrapper {
+  position: relative;
+}
+
+.movie-poster {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-type-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e94560;
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.movie-info {
+  padding: 12px 14px;
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.35;
+  color: #eee;
+}
+
+.movie-year {
+  font-size: 0.82rem;
+  color: #8888aa;
+}
+
+/* ── Watchlist Button ── */
+.watchlist-btn {
+  margin: 10px 14px 14px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.84rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.1s;
+}
+
+.watchlist-btn.add {
+  background: #e94560;
+  color: white;
+}
+
+.watchlist-btn.add:hover {
+  background: #c73652;
+  transform: scale(1.02);
+}
+
+.watchlist-btn.remove {
+  background: #2a2a4a;
+  color: #8888aa;
+}
+
+.watchlist-btn.remove:hover {
+  background: #3a3a5a;
+}
+
+/* ── Empty Watchlist ── */
+.empty-watchlist {
+  text-align: center;
+  padding: 45px;
+  border: 2px dashed #2a2a4a;
+  border-radius: 14px;
+  color: #555577;
+  font-size: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app {
+    padding: 14px;
+  }
+
+  .header {
+    padding: 30px 14px;
+  }
+
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

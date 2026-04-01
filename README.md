@@ -1,56 +1,16 @@
-# 🎬 CineTrack – Movie Watchlist Web App
+# React + Vite
 
-## 📌 Project Overview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-CineTrack is a web application that allows users to search for movies and manage their personal watchlist. It uses the OMDb API to fetch real-time movie data and display it dynamically in a responsive UI.
+Currently, two official plugins are available:
 
-## 🎯 Purpose
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-The goal of this project is to demonstrate the use of JavaScript, API integration, and UI design while building an interactive web application.
+## React Compiler
 
-## 🔗 API Used
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-OMDb API – https://www.omdbapi.com/
+## Expanding the ESLint configuration
 
-## 🚀 Features
-
-* Search movies by title
-* Display movie results dynamically
-* View movie details (poster, year, type)
-* Add/remove movies to/from watchlist
-* Filter movies by type
-* Sort movies (alphabetically / by year)
-* Dark mode / light mode toggle
-
-## 🛠️ Technologies Used
-
-* HTML
-* CSS
-* JavaScript
-* Fetch API
-
-## 📦 Setup Instructions
-
-1. Clone the repository:
-   git clone https://github.com/your-username/cine-track-movie-app.git
-
-2. Navigate to the project folder:
-   cd cine-track-movie-app
-
-3. Open index.html in your browser
-
-4. Add your OMDb API key in script.js
-
-## 📅 Milestones
-
-* Milestone 1: Project planning and setup
-* Milestone 2: API integration
-* Milestone 3: Interactive features
-* Milestone 4: Deployment
-
-## ✨ Future Enhancements
-
-* Debounced search
-* Pagination
-* Random movie suggestion
-* Improved UI/UX
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
