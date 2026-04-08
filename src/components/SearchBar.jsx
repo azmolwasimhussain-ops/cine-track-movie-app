@@ -1,28 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
 function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearch(query);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (query.trim()) onSearch(query);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   return (
-    <form className="search-bar" onSubmit={handleSubmit}>
+    <div className="search-bar">
       <input
         type="text"
-        placeholder="Search for a movie... e.g. Avengers"
+        placeholder="Search movie..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="search-input"
       />
-      <button type="submit" className="search-btn">
+      <button onClick={() => onSearch(query)} className="search-btn">
         <Search size={18} />
         Search
       </button>
-    </form>
+    </div>
   );
 }
 
